@@ -1,0 +1,65 @@
+{
+  "extends": ["airbnb"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "classes": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "no-param-reassign": "off",
+    "lines-between-class-members": "off",
+    "semi": [2, "always"],
+    "react/jsx-props-no-spreading": "off",
+    "react/static-property-placement": "off",
+    "prefer-destructuring": "error",
+    "camelcase": "off",
+    "react/prop-types": "off",
+    "react/sort-comp": "off",
+    "react/state-in-constructor": "off",
+    "no-undef": "off",
+    "react/prefer-stateless-function": "off",
+    "no-use-before-define": "off",
+    "linebreak-style": "off",
+    "no-return-await": "off",
+    "default-case": "off",
+    "no-unused-vars": "off",
+    "max-len": "off",
+    "no-restricted-syntax": [0, "ForInStatement", "ForOfStatement"],
+    "class-methods-use-this": "off",
+    "no-unused-expressions": "off",
+    "padded-blocks": "off",
+    "react/jsx-filename-extension": "off",
+    "global-require": "off",
+    "no-console": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-underscore-dangle": "off",
+    "prefer-promise-reject-errors": "off",
+    "no-nested-ternary": "off",
+    "react/no-multi-comp": "off",
+    "react/no-unescaped-entities": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/jsx-max-props-per-line": [2, { "maximum": 1}]
+  },
+  "settings": {
+
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "env": {
+    "commonjs": true,
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "fetch": false,
+    "alert": false
+  }
+}

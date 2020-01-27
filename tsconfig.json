@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es2017",
+    "jsx": "react-native",
+    "noEmit": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+
+    "preserveConstEnums": true,
+    "pretty": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+
+    "module": "es6",
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "lf",
+    "charset": "utf8",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strict": true,
+    "noImplicitUseStrict": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "~js",
+    "android",
+    "ios",
+    "node_modules"
+  ]
+}
