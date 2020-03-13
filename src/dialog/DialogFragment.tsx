@@ -6,6 +6,12 @@ import Dialog, {
 } from 'react-native-popup-dialog';
 import SmartComponent from '../views/SmartComponent';
 
+export {
+    SlideAnimation,
+    FadeAnimation,
+    ScaleAnimation,
+}
+
 /** *
  *
  visible	boolean	false

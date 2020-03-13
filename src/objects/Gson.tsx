@@ -52,11 +52,12 @@ export default class Gson {
     return map;
   }
 
-  static copy(object : any, protoType : any) {
+  static copy(object : any) {
     if (!object) {
       return object;
     }
-    if (object.constructor.name === 'Array') {
+    return JSON.parse(JSON.stringify(object));
+    /*if (object.constructor.name === 'Array') {
       const newObject = object.slice();
       newObject.__proto__ = protoType;
       return newObject;
@@ -68,6 +69,6 @@ export default class Gson {
     }
     const newObject = { ...object };
     newObject.__proto__ = protoType;
-    return newObject;
+    return newObject;*/
   }
 }

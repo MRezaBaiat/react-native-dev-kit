@@ -1,24 +1,31 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import { AnimatedRegion, LatLng, Marker } from 'react-native-maps';
+import {
+  AnimatedRegion, LatLng, Marker, Point,
+} from 'react-native-maps';
 import isEqual from 'lodash.isequal';
 import FastImage from 'react-native-fast-image';
 import { ViewStyle } from 'react-native';
 
-interface Props{
+export interface MarkerProps{
     imageStyle? : ViewStyle,
     src : any,
-    coordinate: LatLng | AnimatedRegion
+    coordinate: LatLng
+    onPress?:()=>void,
+    title?: string,
+    description?: string,
+    anchor?: Point,
+    rotation?: number,
+    key:string
 }
-
-export default class CustomMarker extends PureComponent<Props> {
+export default class CustomMarker extends PureComponent<MarkerProps> {
 
     state = {
       tracksViewChanges: true,
     };
 
-    componentWillReceiveProps(nextProps: any) {
+    UNSAFE_componentWillReceiveProps(nextProps: Readonly<MarkerProps>, nextContext: any): void {
       if (!isEqual(this.props, nextProps)) {
         this.setState(() => ({
           tracksViewChanges: true,
@@ -38,7 +45,7 @@ export default class CustomMarker extends PureComponent<Props> {
 
     render() {
       const { tracksViewChanges } = this.state;
-      const { src, imageStyle } = this.props;
+      const { src, imageStyle,style } = this.props;
       return (
         <Marker
           tracksViewChanges={tracksViewChanges}
@@ -47,7 +54,7 @@ export default class CustomMarker extends PureComponent<Props> {
 
           <FastImage
             source={src}
-            style={imageStyle}
+            style={Object.assign({width: 50, height: 50},imageStyle)}
             resizeMode="stretch"
             onLoad={() => {
               this.setState(() => ({

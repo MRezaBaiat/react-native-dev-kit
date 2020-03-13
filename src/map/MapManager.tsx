@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Shape,
   ViewStyle,
-  AsyncStorage,
 } from 'react-native';
 import MapView, {
   PROVIDER_GOOGLE,
@@ -26,10 +25,10 @@ import LocationListener from './LocationListener';
 import ShadowUtils from '../utils/ShadowUtils';
 
 import CustomMarker from './CustomMarker';
-import PolylineLayer from './PolylineLayer';
 import Coordinates from './Coordinates';
 import SmartComponent from '../views/SmartComponent';
 import CameraChangeListener from './CameraChangeListener';
+import Storage from '../utils/Storage';
 
 const MY_LOCATION_IMAGE = require('../../assets/images/my_location_icon.png');
 const NAVIGATION_IMAGE = require('../../assets/images/navigation.png');
@@ -49,25 +48,25 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
     static DEFAULT_ZOOM : number = 0.003;
 
     centerRegion : Region = {
-      latitude: 0, longitude: 0, latitudeDelta: 0, longitudeDelta: 0,
+      latitude: 0,
+      longitude: 0,
+      latitudeDelta: 0,
+      longitudeDelta: 0,
     };
 
     static lastKnownLocation : Coordinates = null;
-
-    mCameraListeners : ArrayList<CameraChangeListener> = new ArrayList();
-
-    mLongClickListeners : ArrayList<(coordinate: LatLng)=>void> = new ArrayList();
-
-    mMapClickListeners : ArrayList<(event : MapEvent)=>void> = new ArrayList();
-
     lastCameraIdlePointCalled : LatLng = null;
+    mapView : MapView;
+
+    listeners = {
+      cameraListeners: [] as CameraChangeListener[],
+      longClickListeners: [] as ((coordinate: LatLng)=>void)[],
+      mapClickListeners: [] as ((event : MapEvent)=>void)[],
+    };
 
     state = {
-      markersList: new ArrayList<Marker>(),
-      markerLayersList: new ArrayList<MarkerLayer>(),
-      polylineLayersList: new ArrayList<PolylineLayer>(),
-      polyLines: new ArrayList<Polyline>(),
-      shapes: new ArrayList<Shape>(),
+      markerLayersList: [] as MarkerLayer[],
+      shapes: [] as Shape[],
       focused: true,
       centerPointView: null as any,
       trafficEnabled: false,
@@ -75,15 +74,9 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
       navigating: false,
     };
 
-    mapView : MapView;
-
-    // eslint-disable-next-line no-useless-constructor
-    constructor(props : MapManagerProps) {
-      super(props);
-    }
-
     componentDidMount(): void {
-      this.props.onMapReady && this.props.onMapReady(this);
+      const { onMapReady } = this.props;
+      onMapReady && onMapReady(this);
     }
 
     componentWillUnmount(): void {
@@ -92,57 +85,20 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
 
     render() {
 
-      const objectsCache : ArrayList<any> = new ArrayList();
-
-      if (!this.state.markerLayersList.isEmpty()) {
-        for (const layer of this.state.markerLayersList) {
-          if (!layer.markers.isEmpty()) {
-            for (const marker of layer.markers) {
-              objectsCache.add(marker);
-            }
-          }
-        }
-      }
-
-      if (!this.state.polylineLayersList.isEmpty()) {
-        for (const layer of this.state.polylineLayersList) {
-          if (!layer.lines.isEmpty()) {
-            for (const line of layer.lines) {
-              objectsCache.add(line);
-            }
-          }
-        }
-      }
-
-      if (!this.state.shapes.isEmpty()) {
-        for (const shape of this.state.shapes) {
-          objectsCache.add(shape);
-        }
-      }
-
-      if (!this.state.markersList.isEmpty()) {
-        for (const marker of this.state.markersList) {
-          objectsCache.add(marker);
-        }
-      }
-
-      if (!this.state.polyLines.isEmpty()) {
-        for (const line of this.state.polyLines) {
-          objectsCache.add(line);
-        }
-      }
-
-      const { panelMargins, navigationMarginTop, navigationButton } = this.props;
+      const { markerLayersList, trafficEnabled, centerPointView } = this.state;
+      const {
+        panelMargins, navigationMarginTop, navigationButton, style, initialRegion, children,
+      } = this.props;
 
       const myLocationMarginTop = panelMargins ? panelMargins.top : 7;
       const myLocationMarginsRight = panelMargins ? panelMargins.right : 7;
 
       return (
         <View
-          style={[styles.container, this.props.style, { zIndex: 0 }]}
+          style={[styles.container, style, { zIndex: 0 }]}
         >
           <MapView
-            initialRegion={this.props.initialRegion}
+            initialRegion={initialRegion}
             provider={PROVIDER_GOOGLE}
             showsUserLocation
             showsMyLocationButton={false}
@@ -167,16 +123,16 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
             onPress={(event: MapEvent) => this.clickPerformed(event)}
             onPanDrag={(event: MapEvent) => { this.cameraChangeStarted(event); }}
             onLongPress={(event: MapEvent) => this.longPressPerformed(event)}
-            showsTraffic={this.state.trafficEnabled}
+            showsTraffic={trafficEnabled}
             style={styles.map}
           >
             {
-               objectsCache.map((object) => object)
-            }
+                  markerLayersList.map((layer) => layer.getMarkers().map((marker) => marker.render()))
+              }
 
           </MapView>
           {
-             this.state.centerPointView
+             centerPointView
           }
 
           <View style={{
@@ -236,7 +192,7 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
                     }
           </View>
           {
-                    this.props.children
+                    children
                 }
         </View>
       );
@@ -244,91 +200,89 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
 
     onRegionChange = (region : Region) => {
       this.centerRegion = region;
-    }
+    };
 
     getCenterCoordinate() : Region {
       return this.centerRegion;
     }
 
     clickPerformed(event : MapEvent) {
-      if (this.mMapClickListeners.isEmpty()) {
+      const { mapClickListeners } = this.listeners;
+      if (mapClickListeners.length === 0) {
         return;
       }
-      this.mMapClickListeners.forEach((listener) => {
-        listener(event);
-      });
+      mapClickListeners.forEach((listener) => listener(event));
     }
 
     longPressPerformed(event: MapEvent) {
-      if (this.mLongClickListeners.isEmpty()) {
+      const { longClickListeners } = this.listeners;
+      if (longClickListeners.length === 0) {
         return;
       }
-      this.mLongClickListeners.forEach((listener) => {
-        listener(event.nativeEvent.coordinate);
-      });
+      longClickListeners.forEach((listener) => listener(event.nativeEvent.coordinate));
     }
 
     cameraChangeStarted(event : MapEvent) {
-      if (this.state.focused) {
-        this.setState((prevState : any) => ({
-          ...prevState,
-          focused: false,
-        }));
-      }
-      if (this.mCameraListeners.isEmpty()) {
+      const { focused } = this.state;
+      const { cameraListeners } = this.listeners;
+      focused && this.setState((prevState : any) => ({
+        ...prevState,
+        focused: false,
+      }));
+      if (cameraListeners.length === 0) {
         return;
       }
-      this.mCameraListeners.forEach((listener) => {
-        if (listener.onStarCameraChange === null) {
-          return;
-        }
-        listener.onStarCameraChange(event);
+      cameraListeners.forEach((listener) => {
+        listener.onStartCameraChange && listener.onStartCameraChange(event);
       });
     }
 
     cameraChangeEnded = (region : Region) => {
       this.centerRegion = region;
-      if (this.mCameraListeners.isEmpty()) {
+      const { cameraListeners } = this.listeners;
+      const { lastCameraIdlePointCalled } = this;
+      if (cameraListeners.length === 0) {
         return;
       }
       const centerPoint : LatLng = this.getCenterCoordinate();
-      if (this.lastCameraIdlePointCalled && centerPoint.latitude === this.lastCameraIdlePointCalled.latitude && centerPoint.longitude === this.lastCameraIdlePointCalled.longitude) {
+      if (lastCameraIdlePointCalled
+          && centerPoint.latitude === lastCameraIdlePointCalled.latitude
+          && centerPoint.longitude === lastCameraIdlePointCalled.longitude) {
         return;
       }
       this.lastCameraIdlePointCalled = centerPoint;
-      this.mCameraListeners.forEach((listener) => {
-        if (listener.onCameraIdle === null) {
-          return;
-        }
-        listener.onCameraIdle();
+      cameraListeners.forEach((listener) => {
+        listener.onCameraIdle && listener.onCameraIdle();
       });
-    }
+    };
 
     isTrafficEnabled() : boolean {
       return this.state.trafficEnabled;
     }
 
     setMyLocationVisibile(visible : boolean) {
-      this.state.myLocationButtonVisible = visible;
-      this.forceUpdate();
+      this.setState((prevState : any) => ({
+        ...prevState,
+        myLocationButtonVisible: visible,
+      }));
     }
 
     setTrafficEnabled(enabled : boolean) {
-      this.state.trafficEnabled = enabled;
       this.setState((prevState : any) => ({
         ...prevState,
+        trafficEnabled: enabled,
       }));
     }
 
     createMarkerLayer() : MarkerLayer {
-      const layer = new MarkerLayer(this);
-      this.state.markerLayersList.add(layer);
-      return layer;
-    }
-
-    createPolylineLayer() : PolylineLayer {
-      const layer = new PolylineLayer(this);
-      this.state.polylineLayersList.add(layer);
+      const { markerLayersList } = this.state;
+      const layer = new MarkerLayer(() => {
+        this.forceUpdate();
+      });
+      this.setState((prevState: any) => ({
+        ...prevState,
+        markerLayersList: [...markerLayersList, layer],
+      }));
       return layer;
     }
 
@@ -360,56 +314,28 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
       );
     }
 
-    addPolyLine(route : Polyline) {
-      if (this.state.polyLines.contains(route)) {
-        return;
-      }
-      this.state.polyLines.add(route);
-      this.forceUpdate();
-    }
-
-    addPolyLines(polyLines : Polyline[]) {
-      for (const line of polyLines) {
-        if (!this.state.polyLines.contains(line)) {
-          this.state.polyLines.add(line);
-        }
-      }
-      this.forceUpdate();
-    }
-
-    removePolyLine(route : Polyline) {
-      if (!this.state.polyLines.contains(route)) {
-        return;
-      }
-      this.state.polyLines.removeValue(route);
-      this.forceUpdate();
-    }
-
-    removePolyLines(lines : Polyline[] | ArrayList<Polyline>) {
-      for (const line of lines) {
-        this.state.polyLines.removeValue(line);
-      }
-      this.forceUpdate();
-    }
-
     addShape(shape : Shape) {
-      if (this.state.shapes.contains(shape)) {
+      const { shapes } = this.state;
+      if (shapes.includes(shape)) {
         return shape;
       }
-      this.state.shapes.add(shape);
       this.setState((prevState : any) => ({
         ...prevState,
+        shapes: [...shapes, shape],
       }));
       return shape;
     }
 
     removeShape(shape : Shape) {
-      if (!this.state.shapes.contains(shape)) {
+      const { shapes } = this.state;
+      if (!shapes.includes(shape)) {
         return;
       }
-      this.state.shapes.removeValue(shape);
+      const list = [...shapes];
+      list.splice(list.indexOf(shape));
       this.setState((prevState : any) => ({
         ...prevState,
+        shapes: list,
       }));
     }
 
@@ -438,38 +364,6 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
       );
     }
 
-    addMarker(marker : Marker) {
-      if (this.state.markersList.contains(marker)) {
-        return;
-      }
-      this.state.markersList.add(marker);
-      this.forceUpdate();
-    }
-
-    addMarkers(markers : Marker[]) {
-      for (const marker of markers) {
-        if (!this.state.markersList.contains(marker)) {
-          this.state.markersList.add(marker);
-        }
-      }
-      this.forceUpdate();
-    }
-
-    removeMarker(marker : Marker) {
-      if (!this.state || !this.state.markersList.contains(marker)) {
-        return;
-      }
-      this.state.markersList.removeValue(marker);
-      this.forceUpdate();
-    }
-
-    removeMarkers(markers : Marker[]) {
-      for (const marker of markers) {
-        this.state.markersList.removeValue(marker);
-      }
-      this.forceUpdate();
-    }
-
     setFocused(focused : boolean) {
       if (this.state.focused === focused) {
         return;
@@ -486,7 +380,7 @@ export default class MapManager extends SmartComponent<MapManagerProps> {
 
     pause() {
       if (MapManager.lastKnownLocation) {
-        AsyncStorage.setItem(MapManager.SP_LAST_LOCATION_INDENTIFIER, JSON.stringify(MapManager.lastKnownLocation));
+        Storage.set(MapManager.SP_LAST_LOCATION_INDENTIFIER, JSON.stringify(MapManager.lastKnownLocation));
       }
       GPSManager.removeLocationListener(this.mLocationListener);
     }
@@ -584,45 +478,33 @@ PRESS ME
 
 
     addCameraIdleListener(listener : CameraChangeListener) {
-      if (this.mCameraListeners.contains(listener)) {
-        return;
-      }
-      this.mCameraListeners.add(listener);
+      const { cameraListeners } = this.listeners;
+      !cameraListeners.includes(listener) && cameraListeners.push(listener);
     }
 
     removeCameraIdleListener(listener : CameraChangeListener) {
-      if (!this.mCameraListeners.contains(listener)) {
-        return;
-      }
-      this.mCameraListeners.removeValue(listener);
+      const { cameraListeners } = this.listeners;
+      cameraListeners.includes(listener) && cameraListeners.splice(cameraListeners.indexOf(listener));
     }
 
     addLongClickListener(listener : (coordinate: LatLng)=>void) {
-      if (this.mLongClickListeners.contains(listener)) {
-        return;
-      }
-      this.mLongClickListeners.add(listener);
+      const { longClickListeners } = this.listeners;
+      !longClickListeners.includes(listener) && longClickListeners.push(listener);
     }
 
     removeLongClickListener(listener : ()=>void) {
-      if (!this.mLongClickListeners.contains(listener)) {
-        return;
-      }
-      this.mLongClickListeners.removeValue(listener);
+      const { longClickListeners } = this.listeners;
+      longClickListeners.includes(listener) && longClickListeners.splice(longClickListeners.indexOf(listener));
     }
 
     addMapClickListener(listener : (event : MapEvent)=>void) {
-      if (this.mMapClickListeners.contains(listener)) {
-        return;
-      }
-      this.mMapClickListeners.add(listener);
+      const { mapClickListeners } = this.listeners;
+      !mapClickListeners.includes(listener) && mapClickListeners.push(listener);
     }
 
     removeMapClickListener(listener : ()=>void) {
-      if (!this.mMapClickListeners.contains(listener)) {
-        return;
-      }
-      this.mMapClickListeners.removeValue(listener);
+      const { mapClickListeners } = this.listeners;
+      mapClickListeners.includes(listener) && mapClickListeners.splice(mapClickListeners.indexOf(listener));
     }
 
 }

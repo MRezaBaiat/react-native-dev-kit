@@ -1,58 +1,45 @@
-import { Marker } from 'react-native-maps';
-import isEqual from 'lodash.isequal';
-import MapManager from './MapManager';
-import ArrayList from '../objects/ArrayList';
+import Marker from './Marker';
+import {MarkerProps} from "./CustomMarker";
 
 export default class MarkerLayer {
+    markers: Marker[] = [];
+    onChange: ()=>void;
 
-    markers = new ArrayList();
-
-    mapManager : MapManager;
-
-    mLayerId = Date.now();
-
-    constructor(mapManager : MapManager) {
-      this.mapManager = mapManager;
+    constructor(onChange: ()=>void) {
+      this.onChange = onChange;
     }
 
-
-    setMarkers(markers : Marker[] | ArrayList<Marker>) {
-      if (isEqual(markers, this.markers)) {
-        return;
+    addMarker = (props: MarkerProps) => {
+      if (!props.key) {
+        props.key = String(Math.random());
       }
-      this.markers.clear();
-      this.markers.addAll(markers);
-      this.mapManager.forceUpdate();
-    }
-
-    addMarker(marker : Marker) {
-      if (this.markers.contains(marker)) {
-        return;
+      let marker = this.findMarker(props.key);
+      if (!marker) {
+        marker = new Marker({ ...props });
+        this.markers.push(marker);
+        this.onChange();
       }
-      this.markers.add(marker);
-      this.mapManager.forceUpdate();
+      return marker;
+    };
+
+    findMarker(key: string) {
+      return this.markers.find((value) => value.key === key);
     }
 
-    addMarkers(markers : Marker[] | ArrayList<Marker>) {
-      markers.forEach((marker) => {
-        if (this.markers.contains(marker)) {
-          return;
-        }
-        this.markers.add(marker);
-      });
-      this.mapManager.forceUpdate();
-    }
-
-    removeMarker(marker : Marker) {
-      if (!this.markers.contains(marker)) {
-        return;
-      }
-      this.markers.removeValue(marker);
-      this.mapManager.forceUpdate();
+    getMarkers(): Marker[] {
+      return this.markers;
     }
 
     clear() {
-      this.markers.clear();
-      this.mapManager.forceUpdate();
+      this.markers = [];
+      this.onChange();
+    }
+
+    removeMarker(key: string) {
+      const marker = this.findMarker(key);
+      if (key) {
+        this.markers.splice(this.markers.indexOf(marker), 1);
+        this.onChange();
+      }
     }
 }

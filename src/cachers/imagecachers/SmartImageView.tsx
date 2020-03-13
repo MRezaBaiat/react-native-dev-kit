@@ -31,42 +31,42 @@ export default class SmartImageView extends SmartComponent<Props> {
   };
 
   render() {
-    const { src } = this.props;
+    const { src,diskCache,headers } = this.props;
 
     if (typeof src === 'string') {
       if ((src as string).startsWith('http')) {
         return (
-          <CacherImageView
-            {...this.props}
-            onDownloaded={this.createStateChangeFunc(SmartImageViewState.LOADED)}
-            onDownloadStarted={this.createStateChangeFunc(SmartImageViewState.DOWNLOADING)}
-            onError={this.createStateChangeFunc(SmartImageViewState.FAILED)}
-            source={SmartImageView.createUri(src)}
-            diskCache={this.props.diskCache}
-            headers={this.props.headers}
-          />
+            <CacherImageView
+                {...this.props}
+                onDownloaded={this.createStateChangeFunc(SmartImageViewState.LOADED)}
+                onDownloadStarted={this.createStateChangeFunc(SmartImageViewState.DOWNLOADING)}
+                onError={this.createStateChangeFunc(SmartImageViewState.FAILED)}
+                source={SmartImageView.createUri(src)}
+                diskCache={diskCache}
+                headers={headers}
+            />
         );
       }
       if (this.isBase64(src)) {
         return (
-          <FastImage
-            {...this.props}
-            source={SmartImageView.createBase64(src)}
-          />
+            <FastImage
+                {...this.props}
+                source={SmartImageView.createBase64(src)}
+            />
         );
       }
       return (
-        <FastImage
-          {...this.props}
-          source={SmartImageView.createUri(src)}
-        />
+          <FastImage
+              {...this.props}
+              source={SmartImageView.createUri(src)}
+          />
       );
     }
     return (
-      <FastImage
-        {...this.props}
-        source={src}
-      />
+        <FastImage
+            {...this.props}
+            source={src}
+        />
     );
 
   }

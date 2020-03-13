@@ -7,13 +7,13 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
-
+    "lib": ["dom", "esnext"],
     "preserveConstEnums": true,
     "pretty": true,
     "sourceMap": true,
     "allowJs": true,
     "esModuleInterop": true,
-
+    "resolveJsonModule": true,
     "module": "es6",
     "forceConsistentCasingInFileNames": true,
     "newLine": "lf",

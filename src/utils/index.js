@@ -2,7 +2,7 @@ import DateUtils from './DateUtils';
 import EmailUtils from './EmailUtils';
 import EqualUtils from './EqualUtils';
 import FileUtils from './FileUtils';
-import Info from './Info';
+import Storage from './Storage';
 import LangUtils from './LangUtils';
 import MediaPickerUtils from './MediaPickerUtils';
 import NavigationUtils from './NavigationUtils';
@@ -21,7 +21,7 @@ export {
   EmailUtils,
   EqualUtils,
   FileUtils,
-  Info,
+  Storage,
   LangUtils,
   MediaPickerUtils,
   NavigationUtils,

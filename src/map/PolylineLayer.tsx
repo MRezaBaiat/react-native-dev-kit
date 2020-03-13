@@ -1,26 +1,14 @@
+/*
 import PolyLine from 'react-native-maps';
-import isEqual from 'lodash.isequal';
 import MapManager from './MapManager';
 import ArrayList from '../objects/ArrayList';
 
 export default class PolylineLayer {
+    lines : PolyLine[] = [];
+    onChange: ()=>void;
 
-    lines = new ArrayList();
-
-    mapManager : MapManager;
-
-    constructor(mapManager : MapManager) {
-      this.mapManager = mapManager;
-    }
-
-    setLines(lines : PolyLine[] | ArrayList<PolyLine>) {
-      if (isEqual(lines, this.lines)) {
-        return;
-      }
-
-      this.lines.clear();
-      this.lines.addAll(lines);
-      this.mapManager.forceUpdate();
+    constructor(onChange: ()=>void) {
+      this.onChange = onChange;
     }
 
     addPolyLine(line : PolyLine) {
@@ -54,3 +42,4 @@ export default class PolylineLayer {
       this.mapManager.forceUpdate();
     }
 }
+*/
