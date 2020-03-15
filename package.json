@@ -15,7 +15,7 @@
     "native-base": "*",
     "react-fast-compare": "*",
     "react-native-keyboard-aware-scroll-view": "*",
-    "react-native-status-bar-height": "*",
+    "react-native-status-bar-height": "*"
   },
   "devDependencies": {
     "react-native-fs": "*",
