@@ -14,12 +14,12 @@
     "js-dev-kit": "*",
     "native-base": "*",
     "react-fast-compare": "*",
-    "react-native-fs": "*",
     "react-native-keyboard-aware-scroll-view": "*",
     "react-native-status-bar-height": "*",
-    "rn-fetch-blob": "*"
   },
   "devDependencies": {
+    "react-native-fs": "*",
+    "rn-fetch-blob": "*",
     "react-native-fast-image": "*",
     "@mapbox/geo-viewport": "*",
     "@react-native-community/async-storage": "*",
