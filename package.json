@@ -10,7 +10,9 @@
     "unpublish": "npx force-unpublish react-native-dev-kit 'reason message'"
   },
   "dependencies": {
-
+    "crypto-js": "*",
+    "axios": "*",
+    "react-native-fs": "*"
   },
   "devDependencies": {
 
