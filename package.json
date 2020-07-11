@@ -15,7 +15,8 @@
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
     "react-fast-compare": "*",
     "react-native-keyboard-aware-scroll-view": "*",
-    "react-native-status-bar-height": "*"
+    "react-native-status-bar-height": "*",
+    "crypto-js": "*"
   },
   "devDependencies": {
     "react-native-fast-image": "*",
