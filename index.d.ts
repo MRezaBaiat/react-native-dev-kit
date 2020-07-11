@@ -20,6 +20,7 @@ import AxiosInterceptorAdapter from './src/network/AxiosInterceptorAdapter';
 import DialogManager from "./src/dialog/DialogManager";
 import DialogFragment,{FadeAnimation,ScaleAnimation,SlideAnimation,DialogProperties} from "./src/dialog/DialogFragment";
 import NonBlockingView from "./src/views/NonBlockingView";
+import KeyboardAvoidingViewWrapper from "./src/views/wrappers/KeyboardAvoidingViewWrapper";
 
 export {
     File,
@@ -48,5 +49,6 @@ export {
     FadeAnimation,
     SlideAnimation,
     ScaleAnimation,
-    DialogProperties
+    DialogProperties,
+    KeyboardAvoidingViewWrapper
 }

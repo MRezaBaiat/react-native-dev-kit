@@ -22,6 +22,7 @@ module .exports = {
     DialogManager :require('./src/dialog/DialogManager'),
     DialogFragment :require('./src/dialog/DialogFragment'),
     NonBlockingView :require('./src/views/NonBlockingView'),
+    KeyboardAvoidingViewWrapper:require('./src/views/wrappers/KeyboardAvoidingViewWrapper'),
     FadeAnimation:require('./src/dialog/DialogFragment').FadeAnimation,
     SlideAnimation:require('./src/dialog/DialogFragment').SlideAnimation,
     ScaleAnimation:require('./src/dialog/DialogFragment').ScaleAnimation,

@@ -13,6 +13,7 @@
     "@react-native-community/netinfo": "*",
     "js-dev-kit": "*",
     "native-base": "*",
+    "@react-native-community/toolbar-android": "*",
     "react-fast-compare": "*",
     "react-native-keyboard-aware-scroll-view": "*",
     "react-native-status-bar-height": "*"
