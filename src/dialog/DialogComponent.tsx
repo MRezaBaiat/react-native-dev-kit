@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
       width: 1,
       height: 2,
     },
-  }
+  },
   dialogContainer: {
     flex: 1,
   },
