@@ -4,7 +4,7 @@ import ImageMemoryCache from './ImageMemoryCache';
 import HashMap from '../../objects/HashMap';
 import { defaultImageTypes } from './CacherImageView';
 
-const SHA1 = require('crypto-js/sha1');
+const SHA1 = require('js-sha1');
 
 const tempsCacheDir = `${RNFetchBlob.fs.dirs.CacheDir}/TempImages/`;
 
