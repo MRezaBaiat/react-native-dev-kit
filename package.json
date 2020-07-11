@@ -12,7 +12,8 @@
   "dependencies": {
     "crypto-js": "*",
     "axios": "*",
-    "react-native-fs": "*"
+    "react-native-fs": "*",
+    "react-native-status-bar-height": "*"
   },
   "devDependencies": {
 
