@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@react-native-community/netinfo": "*",
-    "js-dev-kit": "*",
     "native-base": "*",
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
     "react-fast-compare": "*",
