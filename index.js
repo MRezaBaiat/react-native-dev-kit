@@ -22,7 +22,6 @@ module .exports = {
     AxiosInterceptorAdapter :require('./src/network/AxiosInterceptorAdapter'),
     DialogManager :require('./src/dialog/DialogManager'),
     DialogFragment :require('./src/dialog/DialogFragment'),
-    DialogComponent :require('./src/dialog/DialogComponent'),
     NonBlockingView :require('./src/views/NonBlockingView'),
     FadeAnimation:require('./src/dialog/DialogFragment').FadeAnimation,
     SlideAnimation:require('./src/dialog/DialogFragment').SlideAnimation,
