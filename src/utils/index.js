@@ -5,7 +5,6 @@ import FileUtils from './FileUtils';
 import Storage from './Storage';
 import LangUtils from './LangUtils';
 import MediaPickerUtils from './MediaPickerUtils';
-import NavigationUtils from './NavigationUtils';
 import NetUtils from './NetUtils';
 import PersianCalendarService from './PersianCalendarService';
 import PhoneUtils from './PhoneUtils';
@@ -24,7 +23,6 @@ export {
   Storage,
   LangUtils,
   MediaPickerUtils,
-  NavigationUtils,
   NetUtils,
   PersianCalendarService,
   PhoneUtils,
