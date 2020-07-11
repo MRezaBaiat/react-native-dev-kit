@@ -10,12 +10,24 @@
     "unpublish": "npx force-unpublish react-native-dev-kit 'reason message'"
   },
   "dependencies": {
-    "crypto-js": "*",
-    "axios": "*",
-    "react-native-fs": "*",
+    "@react-native-community/netinfo": "*",
+    "js-dev-kit": "*",
+    "native-base": "*",
+    "react-fast-compare": "*",
+    "react-native-keyboard-aware-scroll-view": "*",
     "react-native-status-bar-height": "*"
   },
   "devDependencies": {
-
+    "react-native-fast-image": "*",
+    "@react-native-community/async-storage": "*",
+    "react-native-animatable": "*",
+    "react-native-file-type": "*",
+    "react-native-image-crop-picker": "*",
+    "react-native-simple-toast": "*",
+    "@types/react-native": "^*",
+    "@types/react-native-popup-dialog": "*",
+    "@types/supercluster": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*"
   }
 }

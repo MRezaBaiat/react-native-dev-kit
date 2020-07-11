@@ -1,10 +1,4 @@
-import DeviceInfo from 'react-native-device-info';
-
 export default class UUIDUtils {
-
-  static getDeviceUUID() : Promise<string> {
-    return DeviceInfo.getUniqueId();
-  }
 
   public static getNextGUID() : string {
     function s4() {
