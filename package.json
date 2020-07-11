@@ -16,7 +16,8 @@
     "react-fast-compare": "*",
     "react-native-keyboard-aware-scroll-view": "*",
     "react-native-status-bar-height": "*",
-    "crypto-js": "*"
+    "crypto-js": "*",
+    "crypto": "*"
   },
   "devDependencies": {
     "react-native-fast-image": "*",
