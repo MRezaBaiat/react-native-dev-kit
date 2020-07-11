@@ -7,8 +7,6 @@ module .exports = {
     DateUtils :require('./src/utils/DateUtils'),
     Storage :require('./src/utils/Storage'),
     ToastMaster :require('./src/utils/ToastMaster'),
-    UUIDUtils :require('./src/utils/UUIDUtils'),
-    ViewUtils :require('./src/utils/ViewUtils'),
     MediaPickerUtils :require('./src/utils/MediaPickerUtils'),
     FileUtils :require('./src/utils/FileUtils'),
     NetUtils :require('./src/utils/NetUtils'),

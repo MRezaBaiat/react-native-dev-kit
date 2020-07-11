@@ -4,8 +4,6 @@ import SmartImageView from "./src/cachers/imagecachers/SmartImageView";
 import PlatformsUtils from "./src/utils/PlatformsUtils";
 import Storage from "./src/utils/Storage";
 import ToastMaster from "./src/utils/ToastMaster";
-import UUIDUtils from "./src/utils/UUIDUtils";
-import ViewUtils from "./src/utils/ViewUtils";
 import MediaPickerUtils from "./src/utils/MediaPickerUtils";
 import FileUtils from "./src/utils/FileUtils";
 import NetUtils from "./src/utils/NetUtils";
