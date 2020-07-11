@@ -19,7 +19,7 @@ import CallCreator from "./src/network/CallCreator";
 import FileDownloader from "./src/network/FileDownloader";
 import AxiosInterceptorAdapter from './src/network/AxiosInterceptorAdapter';
 import DialogManager from "./src/dialog/DialogManager";
-import DialogFragment,{FadeAnimation,ScaleAnimation,SlideAnimation} from "./src/dialog/DialogFragment";
+import DialogFragment,{FadeAnimation,ScaleAnimation,SlideAnimation,DialogProperties} from "./src/dialog/DialogFragment";
 import DialogComponent from "./src/dialog/DialogComponent";
 import NonBlockingView from "./src/views/NonBlockingView";
 
@@ -50,5 +50,6 @@ export {
     NonBlockingView,
     FadeAnimation,
     SlideAnimation,
-    ScaleAnimation
+    ScaleAnimation,
+    DialogProperties
 }

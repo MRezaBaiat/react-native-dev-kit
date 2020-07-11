@@ -27,5 +27,6 @@ module .exports = {
     FadeAnimation:require('./src/dialog/DialogFragment').FadeAnimation,
     SlideAnimation:require('./src/dialog/DialogFragment').SlideAnimation,
     ScaleAnimation:require('./src/dialog/DialogFragment').ScaleAnimation,
+    DialogProperties:require('./src/dialog/DialogFragment').DialogProperties,
 }
 
