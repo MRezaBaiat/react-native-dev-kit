@@ -24,5 +24,8 @@ module .exports = {
     DialogFragment :require('./src/dialog/DialogFragment'),
     DialogComponent :require('./src/dialog/DialogComponent'),
     NonBlockingView :require('./src/views/NonBlockingView'),
+    FadeAnimation:require('./src/dialog/DialogFragment').FadeAnimation,
+    SlideAnimation:require('./src/dialog/DialogFragment').SlideAnimation,
+    ScaleAnimation:require('./src/dialog/DialogFragment').ScaleAnimation,
 }
 
