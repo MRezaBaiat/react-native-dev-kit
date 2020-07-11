@@ -1,4 +1,5 @@
 import { Dimensions, ViewStyle } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const { width, height } = Dimensions.get('window');
 
@@ -37,12 +38,10 @@ export default class ViewUtils {
   }
 
   static getScreenHeight() {
-    const {getStatusBarHeight} = require('react-native-status-bar-height');
     return height - this.getStatusbarHeight();
   }
 
   static getStatusbarHeight() {
-    const {getStatusBarHeight} = require('react-native-status-bar-height');
     return getStatusBarHeight();
   }
 
