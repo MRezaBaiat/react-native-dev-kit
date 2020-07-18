@@ -21,6 +21,7 @@ import DialogManager from "./src/dialog/DialogManager";
 import DialogFragment,{FadeAnimation,ScaleAnimation,SlideAnimation,DialogProperties} from "./src/dialog/DialogFragment";
 import NonBlockingView from "./src/views/NonBlockingView";
 import KeyboardAvoidingViewWrapper from "./src/views/wrappers/KeyboardAvoidingViewWrapper";
+import Gson from "./src/objects/Gson";
 
 export {
     File,
@@ -50,5 +51,6 @@ export {
     SlideAnimation,
     ScaleAnimation,
     DialogProperties,
-    KeyboardAvoidingViewWrapper
+    KeyboardAvoidingViewWrapper,
+    Gson
 }

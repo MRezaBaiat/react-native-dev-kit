@@ -27,5 +27,6 @@ module .exports = {
     SlideAnimation:require('./src/dialog/DialogFragment').SlideAnimation,
     ScaleAnimation:require('./src/dialog/DialogFragment').ScaleAnimation,
     DialogProperties:require('./src/dialog/DialogFragment').DialogProperties,
+    Gson: require('./src/objects/Gson').default
 }
 
