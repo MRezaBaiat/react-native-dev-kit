@@ -1,5 +1,6 @@
-const swapIndex = (array: [],from: number,to: number): []=>{
-    const object = array[from];
+const swapIndex = (array: [],object: any,to: number): []=>{
+    // @ts-ignore
+    const from = array.indexOf(object);
     if(!object || to > array.length - 1){
         return array;
     }
