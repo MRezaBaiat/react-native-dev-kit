@@ -22,6 +22,7 @@ import DialogFragment,{FadeAnimation,ScaleAnimation,SlideAnimation,DialogPropert
 import NonBlockingView from "./src/views/NonBlockingView";
 import KeyboardAvoidingViewWrapper from "./src/views/wrappers/KeyboardAvoidingViewWrapper";
 import Gson from "./src/objects/Gson";
+import ArrayUtils from "./src/utils/ArrayUtils";
 
 export {
     File,
@@ -52,5 +53,6 @@ export {
     ScaleAnimation,
     DialogProperties,
     KeyboardAvoidingViewWrapper,
-    Gson
+    Gson,
+    ArrayUtils
 }
