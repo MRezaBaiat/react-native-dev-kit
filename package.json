@@ -11,24 +11,25 @@
   },
   "dependencies": {
     "@react-native-community/netinfo": "*",
-    "native-base": "*",
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
+    "jalali-moment": "*",
+    "js-sha1": "*",
+    "native-base": "*",
     "react-fast-compare": "*",
     "react-native-keyboard-aware-scroll-view": "*",
-    "react-native-status-bar-height": "*",
-    "js-sha1": "*"
+    "react-native-status-bar-height": "*"
   },
   "devDependencies": {
-    "react-native-fast-image": "*",
     "@react-native-community/async-storage": "*",
-    "react-native-animatable": "*",
-    "react-native-file-type": "*",
-    "react-native-image-crop-picker": "*",
-    "react-native-simple-toast": "*",
     "@types/react-native": "^*",
     "@types/react-native-popup-dialog": "*",
     "@types/supercluster": "*",
     "@typescript-eslint/eslint-plugin": "*",
-    "@typescript-eslint/parser": "*"
+    "@typescript-eslint/parser": "*",
+    "react-native-animatable": "*",
+    "react-native-fast-image": "*",
+    "react-native-file-type": "*",
+    "react-native-image-crop-picker": "*",
+    "react-native-simple-toast": "*"
   }
 }

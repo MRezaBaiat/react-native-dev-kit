@@ -10,7 +10,7 @@ export default class HashMap<K extends string | number, V> {
     this[key] = value;
   }
 
-  remove(key : K) {
+  remove(key : string | number) {
     // @ts-ignore
     this[key] = undefined;
   }
@@ -30,10 +30,7 @@ export default class HashMap<K extends string | number, V> {
   }
 
   clear() {
-    const keys = this.keys();
-    for (const key of keys) {
-      this.remove(key);
-    }
+    this.keys().forEach(this.remove);
   }
 
   values() : V[] {
@@ -48,15 +45,8 @@ export default class HashMap<K extends string | number, V> {
     return values;
   }
 
-  keys() : K[] {
-    const keys: any[] = [];
-    Object.keys(this).forEach((key) => {
-      // @ts-ignore
-      if (this[key] !== undefined) {
-        keys.push(key);
-      }
-    });
-    return keys;
+  keys() : (string | number)[] {
+    return Object.keys(this);
   }
 
   iterate(func: (key : K, value : V, index : number) => void) {
