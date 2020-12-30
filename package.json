@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "react-native-dev-kit",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "scripts": {
     "upgradeLatest": "yarn upgrade-interactive --latest",
     "fix-lints": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",

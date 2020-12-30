@@ -121,7 +121,7 @@ const isInMiddle = (from: string | moment.Moment | number,middle: string | momen
   const fromTime = convertToMoment(toYYYYMMDDHHmm(from)).toDate().getTime() - offset;
   const middleTime = convertToMoment(toYYYYMMDDHHmm(middle)).toDate().getTime();
   const toTime = convertToMoment(toYYYYMMDDHHmm(to)).toDate().getTime() + offset;
-  return fromTime < middleTime && toTime > middleTime;
+  return fromTime <= middleTime && toTime >= middleTime;
 };
 
 const getDayName = (date: number | string | moment.Moment): keyof DaysOfWeek=>{
