@@ -111,7 +111,7 @@ const convertToMoment = (date: number | string | moment.Moment | YYYYMMDDHHmm | 
   }
 };
 
-const isWithingRange = (from: string | moment.Moment,to: string | moment.Moment,offset: number): boolean=>{
+const isWithingRange = (from: string | number | moment.Moment,to: string | number | moment.Moment,offset: number): boolean=>{
   const fromDate = convertToMoment(toYYYYMMDDHHmm(from));
   const toDate = convertToMoment(toYYYYMMDDHHmm(to));
   return toDate.toDate().getTime() - fromDate.toDate().getTime() <= offset;
@@ -122,6 +122,20 @@ const isInMiddle = (from: string | moment.Moment | number,middle: string | momen
   const middleTime = convertToMoment(toYYYYMMDDHHmm(middle)).toDate().getTime();
   const toTime = convertToMoment(toYYYYMMDDHHmm(to)).toDate().getTime() + offset;
   return fromTime <= middleTime && toTime >= middleTime;
+};
+
+const conflict = (ranges:{from: number | string | moment.Moment,to: number | string | moment.Moment}[],offset = 0)=>{
+  return ranges.find(r => {
+    return ranges.find(r2 =>
+        r2 !== r &&
+        (
+            isInMiddle(r.from,r2.from,r.to,offset) ||
+            isInMiddle(r.from,r2.to,r.to,offset) ||
+            isInMiddle(r2.from,r.from,r2.to,offset) ||
+            isInMiddle(r2.from,r.to,r2.to,offset)
+        )
+    );
+  });
 };
 
 const getDayName = (date: number | string | moment.Moment): keyof DaysOfWeek=>{
@@ -178,6 +192,7 @@ export default {
   findFormat,
   areInSameDay,
   getDayName,
+  conflict,
   isInMiddle,
   isWithingRange,
   defaultLocale,
