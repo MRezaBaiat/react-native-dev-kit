@@ -12,7 +12,6 @@
   "dependencies": {
     "@react-native-community/netinfo": "*",
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
-    "javascript-dev-kit": "^0.23.4",
     "js-sha1": "*",
     "native-base": "*",
     "react-fast-compare": "*",
@@ -26,6 +25,7 @@
     "@types/supercluster": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
+    "javascript-dev-kit": "*",
     "react-native-animatable": "*",
     "react-native-fast-image": "*",
     "react-native-file-type": "*",

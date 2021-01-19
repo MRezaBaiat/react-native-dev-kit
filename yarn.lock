@@ -732,7 +732,7 @@ jalali-moment@~3.3.9:
     inquirer "^7.1.0"
     moment "^2.26.0"
 
-javascript-dev-kit@^0.23.4:
+javascript-dev-kit@*:
   version "0.23.4"
   resolved "https://registry.yarnpkg.com/javascript-dev-kit/-/javascript-dev-kit-0.23.4.tgz#02fcb02a846ad944945f96b468fa9979e6c17299"
   integrity sha512-wRw+b77ZTfgOwbeE3qcKWt6l6nXWKG5TeUNj1ABO/EEctbdUWPoA6H/HAvobHWrtDzjBLxuJkvUwlgfmm5dYYg==
@@ -1017,10 +1017,10 @@ react-native-easy-grid@0.2.2:
   dependencies:
     lodash "^4.17.15"
 
-react-native-fast-image@*:
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-7.0.2.tgz#e06b21f42f4a9786eaa86f3db35d919070fb8403"
-  integrity sha512-MfuzJbC0RjYobR2gFCdqe1I7jvNOCfDkjQ7VGOHXniqjohhULMkcWNBE9Umovi9Dx93lJ6t5utcE2wf/09zvlg==
+react-native-fast-image@8.3.4:
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.3.4.tgz#79edca177e30311b19d59ff335625bcbe22650d7"
+  integrity sha512-LpzAdjUphihUpVEBn5fEv5AILe55rHav0YiZroPZ1rumKDhAl4u2cG01ku2Pb7l8sayjTsNu7FuURAlXUUDsow==
 
 react-native-file-type@*:
   version "0.0.8"
@@ -1040,7 +1040,7 @@ react-native-fs@2.11.15:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
 
-react-native-image-crop-picker@*:
+react-native-image-crop-picker@^0.35.2:
   version "0.35.2"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.35.2.tgz#21e085e40cb5724e1e986b8eba59ef23df19598c"
   integrity sha512-4nHAYwnemFJLzVJPl5dhNB+WQgNp41MLJjyYCypatMZl2GJD+EVXnu5eSUQE+UOpaIEhSVtqK5Y3OQ93hMhosQ==
