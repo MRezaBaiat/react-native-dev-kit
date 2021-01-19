@@ -124,11 +124,12 @@ const isInMiddle = (from: string | moment.Moment | number,middle: string | momen
   return fromTime <= middleTime && toTime >= middleTime;
 };
 
-const conflict = (ranges:{from: number | string | moment.Moment,to: number | string | moment.Moment}[],offset = 0)=>{
+const findConflict = (ranges:{from: number | string | moment.Moment,to: number | string | moment.Moment}[],offset = 0)=>{
   return ranges.find(r => {
     return ranges.find(r2 =>
         r2 !== r &&
         (
+            r2.from === r.from && r2.to === r.to ||
             isInMiddle(r.from,r2.from,r.to,offset) ||
             isInMiddle(r.from,r2.to,r.to,offset) ||
             isInMiddle(r2.from,r.from,r2.to,offset) ||
@@ -192,7 +193,7 @@ export default {
   findFormat,
   areInSameDay,
   getDayName,
-  conflict,
+  findConflict,
   isInMiddle,
   isWithingRange,
   defaultLocale,

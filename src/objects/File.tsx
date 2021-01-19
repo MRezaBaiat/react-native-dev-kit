@@ -21,6 +21,7 @@ export default class File {
       return RNFetchBlob.fs.stat(this.filePath)
         .then((stats) => (stats.size ? Number.parseInt(stats.size) : -1))
         .catch((err) => {
+            console.log(err);
           return -1;
         });
     }

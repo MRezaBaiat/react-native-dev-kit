@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "react-native-dev-kit",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "scripts": {
     "upgradeLatest": "yarn upgrade-interactive --latest",
     "fix-lints": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-native-community/netinfo": "*",
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
-    "jalali-moment": "*",
+    "javascript-dev-kit": "^0.23.4",
     "js-sha1": "*",
     "native-base": "*",
     "react-fast-compare": "*",
